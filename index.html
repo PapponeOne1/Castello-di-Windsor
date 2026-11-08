@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windsor Castle: 1000 Anni di Storia - Quiz Interattivo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        royal: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            400: '#486581',
+                            700: '#102a43',
+                            800: '#0b69a3',
+                            900: '#061b2e',
+                            gold: '#d4af37',
+                            goldHover: '#b89628',
+                            darkGold: '#aa820a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Cinzel', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gold-border {
+            border-image: linear-gradient(to right, #d4af37, #f3e5ab, #d4af37) 1;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-bg {
+            background: linear-gradient(135deg, #d4af37, #aa820a);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Header Navigation -->
+    <header class="w-full bg-royal-700 dark:bg-slate-900 border-b-2 border-royal-gold text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid font-serif text-royal-gold text-2xl fa-chess-rook"></i>
+                <h1 class="font-serif font-bold text-lg md:text-xl tracking-wider text-royal-gold">WINDSOR CASTLE QUIZ</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-700/50 text-royal-gold transition-colors focus:outline-none" title="Cambia Tema">
+                    <i class="fa-solid fa-moon text-xl" id="themeIcon"></i>
+                </button>
+                <span class="text-xs bg-royal-gold/20 border border-royal-gold text-royal-gold px-2 py-1 rounded font-mono">100 Domande</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center">
+
+        <!-- START SCREEN -->
+        <div id="startScreen" class="glass-card rounded-2xl p-6 md:p-10 shadow-2xl border border-slate-200 dark:border-slate-800 text-center space-y-6">
+            <div class="inline-block p-4 rounded-full bg-royal-700/10 dark:bg-royal-gold/10 text-royal-gold mb-2">
+                <i class="fa-solid fa-crown text-5xl"></i>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold gold-gradient-text tracking-wide">
+                Windsor Castle: 1000 Anni di Storia
+            </h2>
+            <p class="text-slate-650 dark:text-slate-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+                Metti alla prova la tua conoscenza sulla storia, l'architettura, le guerre e i segreti della più antica fortezza abitata d'Europa.
+                <span class="block mt-2 text-sm text-royal-gold font-semibold">Nota: Tutte le misurazioni includono unità imperiali e metriche (es. 100 ft / 30,5 m).</span>
+            </p>
+
+            <!-- Mode Selection Card -->
+            <div class="max-w-md mx-auto bg-slate-50 dark:bg-slate-900/80 p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4 text-left">
+                <h3 class="font-serif font-bold text-center text-royal-700 dark:text-royal-gold text-lg">Scegli la modalità di gioco:</h3>
+                
+                <label class="flex items-center p-3 rounded-lg border-2 border-transparent hover:border-royal-gold bg-white dark:bg-slate-800 cursor-pointer transition-all shadow-sm">
+                    <input type="radio" name="quizMode" value="sequential" checked class="w-4 h-4 text-royal-gold focus:ring-royal-gold">
+                    <div class="ml-3">
+                        <span class="block font-semibold text-sm">Ordine Cronologico (Seguendo il testo)</span>
+                        <span class="block text-xs text-slate-500 dark:text-slate-400">Dal 1066 con Guglielmo il Conquistatore fino ai giorni nostri.</span>
+                    </div>
+                </label>
+
+                <label class="flex items-center p-3 rounded-lg border-2 border-transparent hover:border-royal-gold bg-white dark:bg-slate-800 cursor-pointer transition-all shadow-sm">
+                    <input type="radio" name="quizMode" value="random" class="w-4 h-4 text-royal-gold focus:ring-royal-gold">
+                    <div class="ml-3">
+                        <span class="block font-semibold text-sm">Ordine Casuale (Mescolato)</span>
+                        <span class="block text-xs text-slate-500 dark:text-slate-400">Domande estratte casualmente per una sfida imprevedibile.</span>
+                    </div>
+                </label>
+            </div>
+
+            <button id="startQuizBtn" class="w-full max-w-md gold-bg hover:opacity-95 text-slate-950 font-serif font-bold py-4 px-8 rounded-xl shadow-lg transform hover:-translate-y-0.5 transition-all text-lg tracking-wider">
+                INIZIA IL QUIZ (100 DOMANDE)
+            </button>
+        </div>
+
+        <!-- QUIZ ACTIVE SCREEN -->
+        <div id="quizScreen" class="hidden space-y-6">
+            
+            <!-- Progress Header -->
+            <div class="glass-card p-4 rounded-xl shadow-md border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-center justify-between w-full md:w-auto gap-4">
+                    <span id="questionCounter" class="font-mono text-sm font-bold text-royal-gold bg-royal-700/20 px-3 py-1 rounded-md border border-royal-gold/30">
+                        Domanda 1 di 100
+                    </span>
+                    <span id="scoreCounter" class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                        Punteggio: 0
+                    </span>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full md:w-64 bg-slate-200 dark:bg-slate-800 h-3 rounded-full overflow-hidden">
+                    <div id="progressBar" class="gold-bg h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 shadow-xl border border-slate-200 dark:border-slate-800 space-y-6">
+                <h3 id="questionText" class="text-xl md:text-2xl font-serif font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                    Caricamento domanda...
+                </h3>
+
+                <!-- Options List -->
+                <div id="optionsContainer" class="grid grid-cols-1 gap-3">
+                    <!-- Dynamic Options -->
+                </div>
+
+                <!-- Explanation Box (Hidden initially) -->
+                <div id="explanationBox" class="hidden p-4 md:p-5 rounded-xl bg-slate-100 dark:bg-slate-900 border-l-4 border-royal-gold space-y-2">
+                    <div class="flex items-center space-x-2 font-bold text-royal-700 dark:text-royal-gold text-sm uppercase tracking-wide">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Spiegazione Storica</span>
+                    </div>
+                    <p id="explanationText" class="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed"></p>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <button id="skipBtn" class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors">
+                        Salta Domanda
+                    </button>
+                    <button id="nextBtn" class="hidden gold-bg hover:opacity-90 text-slate-950 font-bold px-6 py-2.5 rounded-lg shadow-md transition-all">
+                        Prossima Domanda <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div id="resultsScreen" class="hidden glass-card rounded-2xl p-6 md:p-10 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-8">
+            <div class="text-center space-y-4">
+                <div id="resultBadgeIcon" class="inline-block p-4 rounded-full bg-royal-gold/10 text-royal-gold">
+                    <i class="fa-solid fa-trophy text-5xl"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold gold-gradient-text">Quiz Completato!</h2>
+                <p id="resultSubtitle" class="text-slate-600 dark:text-slate-400">Ecco il resoconto dettagliato della tua prestazione sulla storia di Windsor.</p>
+
+                <div class="inline-flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-royal-gold/30 min-w-[200px]">
+                    <span id="finalScorePercent" class="text-5xl font-extrabold gold-gradient-text font-mono">0%</span>
+                    <span id="finalScoreFraction" class="text-sm text-slate-500 dark:text-slate-400 mt-1">0 su 100 risposte corrette</span>
+                    <span id="rankBadge" class="mt-3 px-3 py-1 bg-royal-gold text-slate-950 text-xs font-bold uppercase rounded-full tracking-wider">
+                        Storico Reale
+                    </span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restartBtn" class="gold-bg hover:opacity-90 text-slate-950 font-bold py-3 px-6 rounded-xl shadow-md transition-all">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> Riprova Quiz
+                </button>
+                <button id="toggleReviewBtn" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold py-3 px-6 rounded-xl transition-all">
+                    <i class="fa-solid fa-list-check mr-2"></i> Mostra Tutte le Risposte
+                </button>
+            </div>
+
+            <!-- Full Review Container (Hidden by default) -->
+            <div id="reviewContainer" class="hidden space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800 max-h-[500px] overflow-y-auto pr-2">
+                <h3 class="text-xl font-serif font-bold text-royal-gold mb-4">Revisione Dettagliata (100 Domande)</h3>
+                <div id="reviewList" class="space-y-4">
+                    <!-- Dynamic review items -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-slate-900 border-t border-slate-800 text-slate-400 text-xs py-4 text-center mt-auto">
+        <p>Windsor Castle Historical Interactive Quiz &copy; 100 Domande basate sulla storia documentata.</p>
+    </footer>
+
+    <script>
+        // --- 100 QUESTIONS DATASTORE WITH IMPERIAL AND METRIC UNITS ---
+        const quizData = [
+            {
+                q: "Dove si piega a ovest il Tamigi nel Berkshire, dando origine al sito del castello?",
+                options: ["Su una falesia gessosa a 100 piedi / 30,5 metri sopra il fiume", "Su una scogliera di granito a 200 piedi / 61 metri sopra l'acqua", "In una pianura alluvionale a livello del mare", "Su una collina d'argilla alta 50 piedi / 15,2 metri"],
+                answer: 0,
+                exp: "Il testo specifica che la terra si eleva bruscamente dall'acqua su una falesia gessosa a 100 piedi / 30,5 metri sopra il fiume."
+            },
+            {
+                q: "Quanto si estende il terreno fortificato del Castello di Windsor?",
+                options: ["10 acri / 4,05 ettari", "13 acri / 5,26 ettari", "25 acri / 10,12 ettari", "5 acri / 2,02 ettari"],
+                answer: 1,
+                exp: "La superficie totale fortificata del castello ammonta a 13 acri / 5,26 ettari."
+            },
+            {
+                q: "Quante stanze e quanti camini conta all'incirca il Castello di Windsor?",
+                options: ["Oltre 500 stanze e 100 camini", "Oltre 1.000 stanze e più di 300 camini", "Esattamente 800 stanze e 150 camini", "Circa 2.000 stanze e 500 camini"],
+                answer: 1,
+                exp: "Il castello conta oltre 1.000 stanze e più di 300 camini."
+            },
+            {
+                q: "Quanti monarchi custodiscono le loro ossa nella cappella di Windsor?",
+                options: ["6 monarchi", "12 monarchi", "20 monarchi", "39 monarchi"],
+                answer: 1,
+                exp: "La Cappella di San Giorgio a Windsor contiene le spoglie di 12 monarchi."
+            },
+            {
+                q: "Quanti re e regine hanno chiamato 'casa' il Castello di Windsor nel corso della storia?",
+                options: ["25 monarchi", "39 monarchi", "50 monarchi", "12 monarchi"],
+                answer: 1,
+                exp: "Nel corso dei secoli, 39 re e regine hanno abitato il castello."
+            },
+            {
+                q: "In quale anno ha iniziato ad esistere il Castello di Windsor in una forma o nell'altra?",
+                options: ["1066", "1070", "1121", "1348"],
+                answer: 1,
+                exp: "Il testo dichiara che il castello esiste in una forma o nell'altra dall'anno 1070."
+            },
+            {
+                q: "Qual era lo scopo primario con cui fu inizialmente concepito il Castello di Windsor?",
+                options: ["Come residenza di caccia estiva", "Non per ispirare, ma per dominare e come un'arma", "Come centro di commercio fluviale", "Come monastero benedettino"],
+                answer: 1,
+                exp: "Windsor non fu costruito per ispirare, ma per dominare e fu concepito come un'arma."
+            },
+            {
+                q: "Chi sconfisse Re Aroldo alla battaglia di Hastings nell'autunno del 1066?",
+                options: ["Enrico I", "Guglielmo, Duca di Normandia (il Conquistatore)", "Edoardo III", "Carlo I"],
+                answer: 1,
+                exp: "Guglielmo, Duca di Normandia, attraversò la Manica nell'autunno del 1066 e sconfisse Re Aroldo ad Hastings."
+            },
+            {
+                q: "A quale distanza strategica da Londra e l'una dall'altra furono posizionate le fortificazioni fatte costruire da Guglielmo?",
+                options: ["A due ore a cavallo", "A una singola giornata di marcia", "A 50 miglia / 80,4 km di distanza", "A mezza giornata di navigazione"],
+                answer: 1,
+                exp: "Le fortificazioni distavano una singola giornata di marcia l'una dall'altra per permettere l'arrivo di rinforzi in poche ore."
+            },
+            {
+                q: "Quale fortezza custodiva l'est di Londra e quale l'ovest?",
+                options: ["Dover a est, Windsor a ovest", "La Torre di Londra a est, Windsor a ovest", "Windsor a est, La Torre di Londra a ovest", "Hampton Court a est, Windsor a ovest"],
+                answer: 1,
+                exp: "La Torre di Londra custodiva l'est, mentre Windsor custodiva l'ovest."
+            },
+            {
+                q: "A quale maniero sassone apparteneva originariamente il terreno scelto da Guglielmo per Windsor?",
+                options: ["Maniero di Berkshire", "Maniero di Clewer", "Maniero di Hastings", "Maniero di Eton"],
+                answer: 1,
+                exp: "Il terreno apparteneva al maniero di Clewer, un'antica tenuta sassone."
+            },
+            {
+                q: "Di quali materiali era composto il primissimo Castello di Windsor?",
+                options: ["Pietra calcarea e ferro", "Terra e legname", "Mattoni di terracotta e quercia", "Granito e ardesia"],
+                answer: 1,
+                exp: "Il primo castello non era di pietra, ma di terra e legname."
+            },
+            {
+                q: "Quanto era alto il tumulo di terra estratta fatto scavare dai lavoratori sassoni?",
+                options: ["20 piedi / 6,1 metri", "50 piedi / 15,2 metri", "100 piedi / 30,5 metri", "33 piedi / 10 metri"],
+                answer: 1,
+                exp: "I lavoratori accumularono la terra estratta dal fossato in un tumulo alto 50 piedi / 15,2 metri."
+            },
+            {
+                q: "Quale struttura formava la pianta base che ancora oggi definisce il castello?",
+                options: ["Tre torri quadrate", "Due recinti murati (superiore e inferiore) attorno al tumulo", "Un singolo grande palazzo rettangolare", "Un forte a stella a 5 punte"],
+                answer: 1,
+                exp: "Attorno alla base del tumulo furono costruiti due recinti (rione superiore e inferiore)."
+            },
+            {
+                q: "Guglielmo il Conquistatore visse mai al Castello di Windsor?",
+                options: ["Sì, vi morì", "No, era solo un avamposto militare e guarnigione", "Sì, per oltre 20 anni", "Solo durante l'inverno"],
+                answer: 1,
+                exp: "Guglielmo non visse mai a Windsor; per lui era solo una guarnigione e un messaggio scolpito nel paesaggio."
+            },
+            {
+                q: "Chi fu il primo monarca a usare il Castello di Windsor come residenza ufficiale attorno al 1110?",
+                options: ["Guglielmo il Conquistatore", "Enrico I", "Enrico II", "Edoardo III"],
+                answer: 1,
+                exp: "Enrico I, il figlio minore di Guglielmo, si trasferì al castello verso il 1110 e fu il primo a usarlo come residenza."
+            },
+            {
+                q: "Quale evento reale ebbe luogo tra le mura di Windsor nel 1121?",
+                options: ["L'incoronazione di Enrico I", "Il matrimonio di Enrico I con Adeliza di Lovanio", "La firma della Magna Carta", "Il battesimo di Edoardo III"],
+                answer: 1,
+                exp: "Il matrimonio di Enrico I con Adeliza di Lovanio si svolse a Windsor nel 1121."
+            },
+            {
+                q: "Sotto quale re iniziò la trasformazione del castello dal legno alla pietra negli anni '60 del 1100?",
+                options: ["Enrico I", "Enrico II", "Enrico III", "Edoardo IV"],
+                answer: 1,
+                exp: "La trasformazione da legname a pietra iniziò sotto Enrico II negli anni 1160."
+            },
+            {
+                q: "Cosa sostituì la palizzata di legno durante i 14 anni di lavori sotto Enrico II?",
+                options: ["Una torre quadrata in granito", "Un mastio in pietra a guscio (la Torre Rotonda)", "Un grande fossato d'acqua", "Una galleria gotica"],
+                answer: 1,
+                exp: "Enrico II sostituì la palizzata con un mastio in pietra a guscio, la famosa Torre Rotonda."
+            },
+            {
+                q: "Come suddivise Enrico II gli appartamenti reali a Windsor?",
+                options: ["Stanze per gli uomini in basso e per le donne in alto", "Stanze pubbliche nel rione inferiore e residenza privata nel rione superiore", "Appartamenti a nord per l'inverno e a sud per l'estate", "Divise gli spazi tra soldati e nobili"],
+                answer: 1,
+                exp: "Stabilì la divisione tra vita pubblica nel rione inferiore e vita privata nel rione superiore."
+            },
+            {
+                q: "Quanto raggiungevano in spessore le mura erette da Enrico II in alcuni punti?",
+                options: ["3 metri / 9,8 piedi", "7 metri / 23 piedi", "12 metri / 39,3 piedi", "1 metro / 3,2 piedi"],
+                answer: 1,
+                exp: "Le mura fatte erigere da Enrico II raggiungevano in alcuni punti i 7 metri / 23 piedi di spessore."
+            },
+            {
+                q: "Cosa accadde al castello nel 1216 durante la prima guerra dei baroni?",
+                options: ["Fu raso al suolo dai francesi", "Fu assediato per due mesi dalle forze del Principe Luigi di Francia", "Fu venduto al Papa", "Fu abbandonato per la peste"],
+                answer: 1,
+                exp: "Nel 1216, le forze ribelli leali al Principe Luigi di Francia assediarono Windsor per due mesi."
+            },
+            {
+                q: "Quali due uniche fortezze nel sud-est dell'Inghilterra resistettero alla corona inglese nel 1216?",
+                options: ["Londra e Dover", "Windsor e Dover", "Windsor e Rochester", "Canterbury e Windsor"],
+                answer: 1,
+                exp: "In tutto il sud-est dell'Inghilterra, solo Windsor e Dover resistettero all'assedio per la corona inglese."
+            },
+            {
+                q: "Quali migliorie lussuose apportò Enrico III tra il 1240 e il 1263?",
+                options: ["Costruì un palazzo nel rione superiore per la Regina Eleonora e una grande cappella", "Aggiunse una prigione sotterranea", "Creò il Long Walk", "Dipinse i soffitti in stile barocco"],
+                answer: 0,
+                exp: "Enrico III spese cifre esorbitanti per costruire un palazzo per la regina Eleonora, camere reali e una cappella."
+            },
+            {
+                q: "Quale problema strutturale causava la falesia gessosa al castello?",
+                options: ["Frequenti incendi spontanei", "Crepe nelle fondamenta e ammorbidimento della malta per l'acqua", "Attacchi di insetti nel calcare", "Scivolamento completo del fiume"],
+                answer: 1,
+                exp: "L'acqua filtrava attraverso il calcare ammorbidendo la malta e causando crepe nelle fondamenta."
+            },
+            {
+                q: "Quale re nacque tra le mura del castello nel 1312 e volle farne il centro della cavalleria?",
+                options: ["Enrico V", "Edoardo III", "Carlo I", "Giorgio III"],
+                answer: 1,
+                exp: "Edoardo III nacque a Windsor nel 1312 ed era ossessionato dagli ideali cavallereschi."
+            },
+            {
+                q: "Quale prestigioso ordine cavalleresco fu fondato da Edoardo III a Windsor nel 1348?",
+                options: ["Ordine del Bagno", "Ordine della Giarrettiera", "Ordine del Cardo", "Ordine dei Templari"],
+                answer: 1,
+                exp: "Nel 1348 Edoardo III fondò l'Ordine della Giarrettiera, il più prestigioso d'Europa."
+            },
+            {
+                q: "A chi affidò Edoardo III la supervisione dei grandi lavori di ricostruzione del castello?",
+                options: ["Geoffrey Chaucer", "William di Wykeham, vescovo di Winchester", "Hugh May", "Jeffrey Wyattville"],
+                answer: 1,
+                exp: "Edoardo III pose William di Wykeham, vescovo di Winchester, a capo dei monumentali lavori."
+            },
+            {
+                q: "Quale importante innovazione tecnologica fu installata nella Torre Rotonda nel 1354?",
+                options: ["Un mulino ad acqua", "Il primo orologio meccanico a peso d'Inghilterra", "Un telescopio astronomico", "Un sistema di ascensori manuali"],
+                answer: 1,
+                exp: "Nel 1354 fu installato nella Torre Rotonda il primo orologio meccanico a peso dell'Inghilterra."
+            },
+            {
+                q: "Quale illustre prigioniero francese fu trattenuto a Windsor dopo la battaglia di Poitiers nel 1357?",
+                options: ["Principe Luigi", "Re Giovanni II di Francia", "Napoleone Bonaparte", "Il Duca di Borgogna"],
+                answer: 1,
+                exp: "Re Giovanni II di Francia fu fatto prigioniero a Poitiers nel 1357 e trattenuto a Windsor fino al pagamento del riscatto."
+            },
+            {
+                q: "Quale famoso scrittore lavorò a Windsor come 'Clerk of the King's Works' nel XIV secolo?",
+                options: ["William Shakespeare", "Geoffrey Chaucer", "Thomas More", "John Milton"],
+                answer: 1,
+                exp: "Geoffrey Chaucer, l'autore dei Racconti di Canterbury, lavorò come impiegato delle opere del re a Windsor."
+            },
+            {
+                q: "Chi iniziò la costruzione della nuova Cappella di San Giorgio nel 1475?",
+                options: ["Enrico VIII", "Edoardo IV", "Carlo II", "Enrico VII"],
+                answer: 1,
+                exp: "Nel 1475 Edoardo IV iniziò la costruzione della nuova Cappella di San Giorgio."
+            },
+            {
+                q: "Quanto tempo richiese il completamento della nuova Cappella di San Giorgio?",
+                options: ["10 anni", "Oltre 50 anni", "100 anni", "15 anni"],
+                answer: 1,
+                exp: "La cappella gotica perpendicolare richiese oltre 50 anni per essere completata."
+            },
+            {
+                q: "Quale mastro fabbro forgiò le intricate cancellate di ferro della cappella dal 1478?",
+                options: ["Grinling Gibbons", "John Tresilian", "Antonio Verrio", "Claude Whotham"],
+                answer: 1,
+                exp: "John Tresilian, pagato l'alto salario di 16 pence al giorno, forgiò i cancelli in ferro della cappella."
+            },
+            {
+                q: "Quali elementi aggiunse Enrico VIII al Castello di Windsor?",
+                options: ["Il Long Walk", "Il gateway principale e un campo da tennis alla base del tumulo", "La Torre Rotonda in pietra", "La biblioteca reale"],
+                answer: 1,
+                exp: "Enrico VIII ricostruì l'ingresso principale e creò un campo da tennis ai piedi del tumulo."
+            },
+            {
+                q: "Dove si rifugiò Enrico VIII durante il 'Pellegrinaggio di Grazia' del 1536?",
+                options: ["Alla Torre di Londra", "A Windsor, dirigendo la risposta da dietro le mura", "A Parigi", "A Hampton Court"],
+                answer: 1,
+                exp: "Durante la ribellione del 1536, Enrico VIII si ritirò a Windsor a dirigere le operazioni."
+            },
+            {
+                q: "Cosa fece costruire Elisabetta I a Windsor negli anni '70 del 1500?",
+                options: ["Una nuova prigione", "Una lunga galleria affacciata sulla Terrazza Nord (poi Biblioteca Reale)", "Una stalla per 500 cavalli", "Un teatro al coperto"],
+                answer: 1,
+                exp: "Elisabetta I fece aggiungere una lunga galleria sulla Terrazza Nord, diventata in seguito la Biblioteca Reale."
+            },
+            {
+                q: "Che uso fecero le forze parlamentari del castello nel 1642 durante la guerra civile?",
+                options: ["Lo usarono come ospedale da campo", "Lo trasformarono in una prigione e caserma militare", "Lo demolirono in parte", "Lo trasformarono in un mercato pubblico"],
+                answer: 1,
+                exp: "Sotto il colonnello John Venn, il castello divenne quartier generale, caserma e prigione per gli ufficiali realisti."
+            },
+            {
+                q: "Quale leader parlamentare usò Windsor come base e residenza ufficiale dopo essere stato nominato Lord Protettore?",
+                options: ["John Venn", "Oliver Cromwell", "Duca di Wellington", "William Wykeham"],
+                answer: 1,
+                exp: "Oliver Cromwell usò il castello come base e ne fece una delle sue residenze ufficiali."
+            },
+            {
+                q: "Dove fu portato il re Carlo I per le ultime 3 settimane del suo regno prima di essere giustiziato?",
+                options: ["Alla Torre di Londra", "Al Castello di Windsor", " Al Castello di Edimburgo", "Ad Hampton Court"],
+                answer: 1,
+                exp: "Carlo I fu condotto scortato a Windsor prima del processo e della decapitazione."
+            },
+            {
+                q: "Perché Carlo I indossava due camicie al momento della sua esecuzione il 30 gennaio 1649?",
+                options: ["Per proteggersi dalle frecce", "Per non tremare per il freddo evitando che venisse scambiato per paura", "Per seguire la moda reale dell'epoca", "Perché gli abiti reali erano troppo larghi"],
+                answer: 1,
+                exp: "Indossava due camicie contro il freddo affinché la folla non lo vedesse tremare scambiandolo per timore."
+            },
+            {
+                q: "Cosa accadde al corpo di Carlo I la notte del 7 febbraio 1649 dopo l'esecuzione?",
+                options: ["Fu sepolto nell'Abbazia di Westminster", "Fu riportato a Windsor sotto una tempesta di neve e sepolto senza cerimonie", "Fu disperso nel Tamigi", "Fu portato in Francia"],
+                answer: 1,
+                exp: "Il corpo fu ricucito, imbalsamato e trasportato a Windsor durante una tempesta di neve per essere sepolto nella Cappella di San Giorgio."
+            },
+            {
+                q: "Accanto a quali monarchi fu collocato il corpo di Carlo I nella cripta?",
+                options: ["Guglielmo I ed Enrico I", "Enrico VIII e Jane Seymour", "Edoardo III e Filippa", "Giorgio III e Carlotta"],
+                answer: 1,
+                exp: "Carlo I fu deposto nella cripta accanto ad Enrico VIII e alla sua regina Jane Seymour."
+            },
+            {
+                q: "Quale re ordinò la trasformazione barocca più sfarzosa di Windsor dopo la Restaurazione del 1660?",
+                options: ["Carlo I", "Carlo II", "Giacomo II", "Guglielmo III"],
+                answer: 1,
+                exp: "Carlo II voleva fare di Windsor il simbolo del risorgimento reale trasformandolo in stile barocco."
+            },
+            {
+                q: "Quali artisti lavorarono agli interni barocchi sotto Carlo II?",
+                options: ["Pugin e Wyattville", "Antonio Verrio (soffitti) e Grinling Gibbons (intagli in legno)", "Van Dyck e Gainsborough", "Tresilian e Whotham"],
+                answer: 1,
+                exp: "I soffitti furono affrescati da Antonio Verrio e le boiserie intagliate da Grinling Gibbons."
+            },
+            {
+                q: "Cos'è il 'Long Walk' commissionato da Carlo II e piantato tra il 1680 e il 1685?",
+                options: ["Un corridoio coperto di 100 metri", "Un viale di olmi lungo 3 miglia / 4,8 km con 1.652 alberi", "Una terrazza di pietra di 1 chilometro", "Un ponte sul Tamigi"],
+                answer: 1,
+                exp: "Il Long Walk è un viale lungo 3 miglia / 4,8 km composto da 1.652 olmi distanziati di 9 m / 29,5 piedi l'uno dall'altro."
+            },
+            {
+                q: "Cosa accadde all'uso di Windsor sotto i primi re Hannoveriani nel XVIII secolo?",
+                options: ["Fu ampliato con altri 500 locali", "Fu quasi interamente ignorato e rimase per metà vuoto per un secolo", "Fu raso al suolo per costruirvi una fabbrica", "Divenne la sede del Parlamento"],
+                answer: 1,
+                exp: "I primi re Hannover preferivano altre dimore e Windsor rimase quasi ignorato e semivuoto per un secolo."
+            },
+            {
+                q: "Come descrisse la Regina Carlotta (moglie di Giorgio III) il castello di Windsor?",
+                options: ["Il palazzo più caldo d'Europa", "La casa, le stanze e i passaggi più freddi mai esistiti", "Una prigione dorata senza finestre", "Il luogo più romantico del regno"],
+                answer: 1,
+                exp: "La regina Carlotta la definì «la casa, le stanze e i passaggi più freddi che siano mai esistiti»."
+            },
+            {
+                q: "Quanto spese Giorgio III per ristrutturare Windsor con l'architetto James Wyatt?",
+                options: ["50.000 sterline", "Oltre 150.000 sterline", "1 milione di sterline", "10.000 sterline"],
+                answer: 1,
+                exp: "Giorgio III spese oltre 150.000 sterline per apportare modifiche in stile gotico al castello."
+            },
+            {
+                q: "Quale tragica malattia colpì Giorgio III portandolo alla reclusione a Windsor dal 1811?",
+                options: ["Tubercolosi", "Una malattia diagnosticata come follia (cecità e incapacità)", "Peste nera", "Paralisi infantile"],
+                answer: 1,
+                exp: "Dal 1811 Giorgio III fu permanentemente incapacitato, cieco e confinato nei suoi appartamenti a Windsor."
+            },
+            {
+                q: "Quale monarca ha lasciato l'impronta fisica più profonda su Windsor creando l'aspetto che conosciamo oggi?",
+                options: ["Enrico II", "Giorgio IV", "Vittoria", "Edoardo III"],
+                answer: 1,
+                exp: "Giorgio IV, salito al trono nel 1820, ha lasciato il segno fisico più profondo sul castello attuale."
+            },
+            {
+                q: "Quanto denaro votò il Parlamento nel 1824 per il restauro di Giorgio IV?",
+                options: ["100.000 sterline", "300.000 sterline", "1 milione di sterline", "50.000 sterline"],
+                answer: 1,
+                exp: "Nel 1824 il Parlamento approvò uno stanziamento iniziale di 300.000 sterline."
+            },
+            {
+                q: "Perché l'architetto Jeffrey Wyatt cambiò il suo cognome in 'Wyattville'?",
+                options: ["Per ordine del Re", "Per distinguersi dai suoi numerosi parenti anch'essi architetti", "Perché fu fatto nobile", "Per celebrare la città di Windsor"],
+                answer: 1,
+                exp: "Cambiò il cognome per non essere confuso con i parenti architetti."
+            },
+            {
+                q: "Come risolse Wyattville il problema della tozza Torre Rotonda?",
+                options: ["La demolì e la ricostruì in marmo", "Aggiunse una corona di pietra cava falsa alta 33 piedi / 10 metri", "La dipinse di bianco", "La circondò con un fossato d'acqua"],
+                answer: 1,
+                exp: "Aggiunse sopra la torre una corona vuota in pietra alta 33 piedi / 10 metri per darle un profilo imponente."
+            },
+            {
+                q: "Quale sala fu creata da Wyattville per celebrare la sconfitta di Napoleone?",
+                options: ["La Sala di San Giorgio", "La Sala di Waterloo", "La Sala della Giarrettiera", "La Gran Galleria"],
+                answer: 1,
+                exp: "La Sala di Waterloo fu ricavata coprendo un cortile interno per esporre i ritratti dei vincitori di Napoleone."
+            },
+            {
+                q: "Quante persone poteva ospitare il tavolo da pranzo installato nella Sala di Waterloo?",
+                options: ["50 persone", "150 persone", "300 persone", "500 persone"],
+                answer: 1,
+                exp: "La sala fu dotata di un imponente tavolo capace di far sedere 150 invitati."
+            },
+            {
+                q: "Quale celebre architetto del XIX secolo lavorò a 15 anni come apprendista nei cantieri di Giorgio IV?",
+                options: ["Christopher Wren", "Augustus Welby Northmore Pugin", "Hugh May", "James Wyatt"],
+                answer: 1,
+                exp: "Il quindicenne Pugin mosse i primi passi lavorando all'arredamento di Windsor."
+            },
+            {
+                q: "A quanto ammontò il costo finale dei lavori di Giorgio IV rispetto alle 300.000 sterline previste?",
+                options: ["500.000 sterline", "Oltre 1 milione di sterline", "200.000 sterline", "5 milioni di sterline"],
+                answer: 1,
+                exp: "I costi lievitarono fino a superare il milione di sterline dell'epoca."
+            },
+            {
+                q: "Per quanto tempo visse Giorgio IV nel castello trasformato prima di morire nel 1830?",
+                options: ["10 anni", "Appena 18 mesi", "5 anni", "Un solo giorno"],
+                answer: 1,
+                exp: "Giorgio IV si trasferì nel dicembre 1828 e morì nel giugno 1830, dopo appena 18 mesi."
+            },
+            {
+                q: "Qual era l'opinione iniziale della Giovane Regina Vittoria sul Castello di Windsor?",
+                options: ["Lo trovava il luogo più bello del mondo", "Lo definì noioso, stancante e simile a una prigione", "Lo riteneva troppo moderno", "Rifiutò di mettervi piede"],
+                answer: 1,
+                exp: "Inizialmente Vittoria si lamentava che il castello fosse noioso e 'prison-like'."
+            },
+            {
+                q: "Quale tradizione natalizia d'origine tedesca fu introdotta a Windsor da Alberto e diffusa nel mondo?",
+                options: ["I fuochi d'artificio di Capodanno", "L'albero di Natale", "Lo scambio di calze di lana", "Il canto dei carols per strada"],
+                answer: 1,
+                exp: "Il Principe Alberto introdusse l'uso dell'albero di Natale nelle celebrazioni reali a Windsor."
+            },
+            {
+                q: "In quale stanza morì il Principe Alberto il 14 dicembre 1861 all'età di 42 anni?",
+                options: ["Nella Sala di Waterloo", "Nella Stanza Blu (Blue Room)", "Nella Cappella di San Giorgio", "Nella Torre Rotonda"],
+                answer: 1,
+                exp: "Alberto morì nella Blue Room del Castello di Windsor il 14 dicembre 1861."
+            },
+            {
+                q: "Come reagì la Regina Vittoria alla morte del Principe Alberto?",
+                options: ["Si risposò subito", "Mantenne le stanze di Alberto intatte e si immerse in un lutto assoluto", "Demolì le stanze di Alberto", "Si trasferì permanentemente in Francia"],
+                answer: 1,
+                exp: "Vittoria mantenne le stanze immutate, preparando abiti e acqua ogni giorno, e si ritirò in un lutto profondo."
+            },
+            {
+                q: "Quale celebre soprannome fu reso popolare da Rudyard Kipling per la Regina Vittoria?",
+                options: ["La Regina di Ferro", "La Vedova di Windsor (The Widow of Windsor)", "La Rosa di Gran Bretagna", "La Signora del Tamigi"],
+                answer: 1,
+                exp: "Kipling rese celebre la definizione 'La Vedova di Windsor'."
+            },
+            {
+                q: "Chi era responsabile di mantenere i 300 camini del castello accesi e caldi?",
+                options: ["Un team di 50 maggiordomi", "Il 'Fendersmith' del Re (un ruolo tramandato di padre in figlio)", "I soldati della guarnigione", "I prigionieri di guerra"],
+                answer: 1,
+                exp: "Un singolo uomo, il Fendersmith del re, manteneva accesi i 300 camini dell'intera struttura."
+            },
+            {
+                q: "Quanti servitori manteneva Giorgio V a Windsor all'inizio del XX secolo?",
+                options: ["100 servitori", "Circa 660 servitori", "1.500 servitori", "50 servitori"],
+                answer: 1,
+                exp: "Giorgio V manteneva circa 660 servitori guidati dal motto che tutto dovesse essere del meglio."
+            },
+            {
+                q: "Qual era il nome originale germanico della casa reale britannica prima del 1917?",
+                options: ["Asburgo", "Sassonia-Coburgo-Gotha", "Hannover-Windsor", "Hohenzollern"],
+                answer: 1,
+                exp: "Il nome della casata era Sassonia-Coburgo-Gotha, ereditato dal Principe Alberto."
+            },
+            {
+                q: "Perché nel 1917 Re Giorgio V scelse proprio il nome 'Windsor' per la dinastia?",
+                options: ["Per via della legge parlamentare", "Per legare l'identità della monarchia al castello ed eliminare il nome tedesco", "Perché gli fu suggerito dai francesi", "In onore del fiume Tamigi"],
+                answer: 1,
+                exp: "In pieno sentimento anti-tedesco durante la WWI, Giorgio V scelse il nome del castello per la casata."
+            },
+            {
+                q: "Dove preferiva risiedere Edoardo VIII invece che al Castello di Windsor nel 1936?",
+                options: ["A Buckingham Palace", "A Fort Belvedere nel Grande Parco", "A Balmoral", "Ad Holyroodhouse"],
+                answer: 1,
+                exp: "Edoardo VIII preferiva la vicina dimora di Fort Belvedere nel Great Park."
+            },
+            {
+                q: "Dove pronunciò Edoardo VIII il suo storico discorso di abdicazione nel dicembre 1936?",
+                options: ["Dalla Camera dei Comuni", "Davanti a un microfono al Castello di Windsor", "Dalla Radio di Parigi", "Dalla Cattedrale di San Paolo"],
+                answer: 1,
+                exp: "Edoardo VIII pronunciò il discorso di abdicazione al microfono proprio da Windsor Castle."
+            },
+            {
+                q: "Quali precauzioni vennero prese a Windsor allo scoppio della Seconda Guerra Mondiale (1939)?",
+                options: ["Il castello fu dipinto di rosso", "Finestre oscurate, cancellazione dalle mappe e gioielli della corona nascosti", "Fu aperto come albergo per rifugiati", "Fu svuotato e abbandonato"],
+                answer: 1,
+                exp: "Furono messe tende oscuranti, nascosti i gioielli e inviati i documenti al sicuro."
+            },
+            {
+                q: "Dove vennero trasferite per sicurezza le Principesse Elisabetta e Margaret durante la guerra?",
+                options: ["In Canada", "Evacuate al Castello di Windsor", "In Scozia a Balmoral", "In un rifugio a Londra"],
+                answer: 1,
+                exp: "Le due principesse trascorsero quasi tutta la guerra al sicuro all'interno del castello."
+            },
+            {
+                q: "Cosa coltivavano le principesse nei terreni del castello durante la campagna 'Dig for Victory'?",
+                options: ["Fiori da decorazione", "La propria frutta e verdura in appezzamenti di terreno", "Grano per l'esercito", "Erbe aromatiche mediche"],
+                answer: 1,
+                exp: "Le principesse coltivavano ortaggi nei propri appezzamenti secondo il programma di vittoria."
+            },
+            {
+                q: "Quando tenne la Principessa Elisabetta il suo primo discorso radiofonico da Windsor?",
+                options: ["Nel 1939", "Nell'ottobre 1940 (a 14 anni) durante la BBC Children's Hour", "Nel 1945", "Nel 1953"],
+                answer: 1,
+                exp: "All'età di 14 anni, nell'ottobre 1940, rivolse il famoso messaggio radiofonico ai bambini del Commonwealth."
+            },
+            {
+                q: "Quali spettacoli mettevano in scena le principesse a Natale nella Sala di Waterloo?",
+                options: ["Drammi shakespeariani", "Pantomime (es. Cenerentola, Aladino)", "Concerti di pianoforte", "Musical americani"],
+                answer: 1,
+                exp: "Ogni Natale recitavano in pantomime come Cenerentola (1941) e Aladino (1943)."
+            },
+            {
+                q: "Chi assistette in prima fila alla pantomima di Aladino nel 1943 scoprendo l'amore con Elisabetta?",
+                options: ["Winston Churchill", "Il giovane ufficiale di marina Principe Filippo", "Il Duca di Gloucester", " Montgomery"],
+                answer: 1,
+                exp: "Il giovane ufficiale di marina Filippo si sedette in prima fila; la nonna scrisse che i due si amavano da mesi."
+            },
+            {
+                q: "Cosa fu scoperto nel 2020 dietro i ritratti della Sala di Waterloo?",
+                options: ["Una cassaforte con monete d'oro", "Disegni fiabeschi dipinti su carta da parati dal giovane Claude Whotham durante la guerra", "Un passaggio segreto per il fiume", "Una lettera di Carlo I"],
+                answer: 1,
+                exp: "Durante interventi nel 2020 vennero riscoperti i disegni di fiabe dipinti da Claude Whotham nel wartime."
+            },
+            {
+                q: "In quale data scoppiò il grande e devastante incendio al Castello di Windsor?",
+                options: ["25 dicembre 1990", "20 novembre 1992", "14 dicembre 1995", "5 novembre 1988"],
+                answer: 1,
+                exp: "Il terribile incendio scoppiò la mattina del 20 novembre 1992."
+            },
+            {
+                q: "Dove ebbe origine l'incendio del 1992?",
+                options: ["Nelle cucine reali", "Nella Cappella Privata della Regina per il surriscaldamento di un riflettore", "Nella Torre Rotonda per un fulmine", "Nella biblioteca per un corto circuito"],
+                answer: 1,
+                exp: "Un spotlight surriscaldato incendiò una tenda accanto all'altare nella Cappella Privata."
+            },
+            {
+                q: "Quanti vigili del fuoco e quanta acqua furono impiegati per domare l'incendio?",
+                options: ["50 vigili e 10.000 galloni", "225 vigili del fuoco e 1,5 milioni di galloni / 5,68 milioni di litri d'acqua", "1.000 vigili e acqua del mare", "10 vigili con estintori a schiuma"],
+                answer: 1,
+                exp: "225 vigili del fuoco da 7 contee usarono 36 pompe versando 1,5 milioni di galloni / 5,68 milioni di litri d'acqua."
+            },
+            {
+                q: "Per quante ore bruciò ininterrottamente l'incendio prima di essere domato?",
+                options: ["2 ore", "15 ore", "48 ore", "6 ore"],
+                answer: 1,
+                exp: "Le fiamme divamparono per oltre 15 ore devastando 115 stanze."
+            },
+            {
+                q: "Quale membro della famiglia reale aiutò fisicamente a creare catene umane per salvare le opere d'arte?",
+                options: ["Il Principe Carlo", "Il Principe Andrea", "Il Principe Edoardo", "La Principessa Anna"],
+                answer: 1,
+                exp: "Il Principe Andrea, presente al castello, aiutò a formare catene umane per mettere al sicuro i tesori."
+            },
+            {
+                q: "Quanti orologi storici vennero tratti in salvo dalle fiamme?",
+                options: ["50 orologi", "300 orologi", "1.000 orologi", "Nessuno"],
+                answer: 1,
+                exp: "Grazie al tempestivo intervento vennero tratti in salvo circa 300 orologi storici."
+            },
+            {
+                q: "Quale felice ricorrenza personale coincideva con il tragico giorno dell'incendio per la Regina Elisabetta II?",
+                options: ["Il suo compleanno", "Il suo 45° anniversario di matrimonio", "L'anniversario dell'incoronazione", "Il Natale"],
+                answer: 1,
+                exp: "Il 20 novembre 1992 era esattamente il 45° anniversario di matrimonio della Regina con il Principe Filippo."
+            },
+            {
+                q: "Come definì la Regina Elisabetta II l'anno 1992 nel suo celebre discorso alla Guildhall?",
+                options: ["Annus Mirabilis", "Annus Horribilis", "Anno della Rinascita", "Anno della Pace"],
+                answer: 1,
+                exp: "Elisabetta II definì il 1992 un 'Annus Horribilis' per i divorzi dei figli e il rogo di Windsor."
+            },
+            {
+                q: "Perché la proposta iniziale che lo Stato pagasse i danni (60 milioni di £) scatenò l'ira dell'opinione pubblica?",
+                options: ["Perché il castello non era di valore storico", "Perché il paese era in recessione e la ricchezza reale era incalcolabile e non tassata", "Perché i cittadini volevano demolire il castello", "Perché i vigili del fuoco non erano stati pagati"],
+                answer: 1,
+                exp: "Il pubblico contestò l'uso delle tasse dei cittadini in recessione per riparare il palazzo di una famiglia non tassata."
+            },
+            {
+                q: "Quale storica decisione economica prese la Regina per la prima volta dagli anni '30 per finanziare i lavori?",
+                options: ["Vendette i gioielli della corona", "Accettò di iniziare a pagare le imposte sul reddito e aprì Buckingham Palace al pubblico", "Chiese un prestito alla Francia", "Aumentò l'affitto dei terreni"],
+                answer: 1,
+                exp: "Iniziò a pagare le tasse e aprì Buckingham Palace a pagamento (8 £) per finanziare la ricostruzione."
+            },
+            {
+                q: "Quale studio di architettura guidò i lavori di restauro completati in 5 anni?",
+                options: ["Wyattville & Sons", "Donald Insall Associates", "Foster & Partners", "Pugin Restoration"],
+                answer: 1,
+                exp: "I restauri conservativi furono diretti dallo studio Donald Insall Associates."
+            },
+            {
+                q: "Come venne ricostruito il soffitto della Sala di San Giorgio distrutto dal fuoco?",
+                options: ["In cemento armato", "Con un nuovo tetto a travi a martello in quercia inglese sostenibile", "Con una cupola di vetro", "In acciaio inossidabile"],
+                answer: 1,
+                exp: "Fu ricostruito con tradizionali capriate a travi a martello in quercia inglese sostenibile."
+            },
+            {
+                q: "In quale esatta data vennero completati ufficialmente i lavori di restauro di Windsor?",
+                options: ["20 novembre 1997 (giorno del 50° anniversario di matrimonio)", "1° gennaio 2000", "8 settembre 2005", "31 dicembre 1995"],
+                answer: 0,
+                exp: "I lavori terminarono il 20 novembre 1997, a 5 anni esatti dall'incendio e per le Nozze d'Oro reali."
+            },
+            {
+                q: "Dove trascorse la Regina Elisabetta II gran parte del periodo di isolamento durante la pandemia da COVID-19?",
+                options: ["A Buckingham Palace", "All'interno delle mura di Windsor Castle", "A Sandringham", "A Balmoral"],
+                answer: 1,
+                exp: "La Regina rimase isolata a Windsor, proprio come i monarchi del passato durante le epidemie di peste."
+            },
+            {
+                q: "Dove si spense la Regina Elisabetta II l'8 settembre 2022 prima di essere riportata a Windsor?",
+                options: ["Al Castello di Windsor", "Al Castello di Balmoral in Scozia", " Ad Hampton Court", "A Kensington Palace"],
+                answer: 1,
+                exp: "La regina morì a Balmoral in Scozia, ma fu ricondotta a Windsor per la tumulazione."
+            },
+            {
+                q: "In quale specifica cappella all'interno di San Giorgio reposano le spoglie di Elisabetta II?",
+                options: ["Cappella di Alberto", "King George VI Memorial Chapel", "Cappella di Edoardo IV", "Cripta dei Tudors"],
+                answer: 1,
+                exp: "È sepolta nella King George VI Memorial Chapel insieme a genitori, sorella e al marito Filippo."
+            },
+            {
+                q: "Che cosa c'è in realtà sotto la finzione della cupola e dei merli della Torre Rotonda?",
+                options: ["Un bunker nucleare", "Una corona di pietra cava di 33 piedi / 10 metri aggiunta da Wyattville", "Un serbatoio d'acqua", "Una stanza vuota senza soffitto"],
+                answer: 1,
+                exp: "La maestosa altezza della torre è un truogolo scenografico: 33 piedi / 10 metri di corona cava in pietra."
+            },
+            {
+                q: "Di quale epoca sono in realtà i merli 'gotici' visibili all'esterno del castello?",
+                options: ["Del XI secolo", "Aggiunte del XIX secolo imposte su mura barocche del XVII secolo", "Del XIV secolo sotto Edoardo III", "Del 1992 dopo l'incendio"],
+                answer: 1,
+                exp: "I merli gotici sono finzioni decorative ottocentesche applicate sulle mura barocche del 1600."
+            },
+            {
+                q: "Qual era il bisogno principale della Regina Elisabetta II risposto dalla struttura del castello?",
+                options: ["Un tempio alla cavalleria", "Un simbolo di stabilità in un secolo privo di stabilità", "Un palazzo di feste barocche", "Una fortezza contro gli assedi"],
+                answer: 1,
+                exp: "Elisabetta II ha trovato in Windsor un simbolo di continuità e stabilità nel travagliato XX e XXI secolo."
+            },
+            {
+                q: "Qual è la struttura più antica in assoluto ancora presente al Castello di Windsor?",
+                options: ["La Cappella di San Giorgio", "Il tumulo di gesso alto 50 piedi / 15,2 metri scavato dai sassoni", "La Torre Rotonda", "La Grande Cucina"],
+                answer: 1,
+                exp: "Il tumulo di gesso elevato dai costruttori sassoni nel 1070 è la parte più antica di tutta Windsor."
+            },
+            {
+                q: "Quale domando finale ed essenziale pone la storia secolare di Windsor?",
+                options: ["Quanto vale il castello sul mercato?", "Chi lo ha costruito veramente e cosa è costato in termini umani?", "Quale re ha vissuto più a lungo lì?", "Quando ci sarà il prossimo incendio?"],
+                answer: 1,
+                exp: "Il testo conclude chiedendosi chi abbia davvero scavato la terra e costruito le mura e quale sia stato il costo umano."
+            },
+            {
+                q: "Qual è il titolo d'onore o tema centrale del Castello di Windsor nel mondo?",
+                options: ["Il castello più alto del mondo", "Il castello abitato più grande e da più tempo ininterrotto d'Europa", "Il forte meglio difeso contro l'artiglieria", "La prigione più lussuosa d'Inghilterra"],
+                answer: 1,
+                exp: "Windsor detiene il primato di castello abitato più grande al mondo e palazzo più a lungo abitato d'Europa."
+            }
+        ];
+
+        // --- APPLICATION STATE ---
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let userAnswers = []; // stores { question, selected, correct, isCorrect }
+        let isAnswered = false;
+
+        // --- DOM ELEMENTS ---
+        const startScreen = document.getElementById('startScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const questionCounter = document.getElementById('questionCounter');
+        const scoreCounter = document.getElementById('scoreCounter');
+        const progressBar = document.getElementById('progressBar');
+        const explanationBox = document.getElementById('explanationBox');
+        const explanationText = document.getElementById('explanationText');
+        const nextBtn = document.getElementById('nextBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const toggleReviewBtn = document.getElementById('toggleReviewBtn');
+        const reviewContainer = document.getElementById('reviewContainer');
+        const reviewList = document.getElementById('reviewList');
+        const finalScorePercent = document.getElementById('finalScorePercent');
+        const finalScoreFraction = document.getElementById('finalScoreFraction');
+        const rankBadge = document.getElementById('rankBadge');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        // --- THEME TOGGLE ---
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // --- START QUIZ ---
+        startQuizBtn.addEventListener('click', () => {
+            const mode = document.querySelector('input[name="quizMode"]:checked').value;
+            
+            if (mode === 'random') {
+                currentQuestions = [...quizData].sort(() => Math.random() - 0.5);
+            } else {
+                currentQuestions = [...quizData];
+            }
+
+            currentIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+
+            loadQuestion();
+        });
+
+        // --- LOAD QUESTION ---
+        function loadQuestion() {
+            isAnswered = false;
+            explanationBox.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            skipBtn.classList.remove('hidden');
+
+            const currentQ = currentQuestions[currentIndex];
+            
+            // Update Headers
+            questionCounter.textContent = `Domanda ${currentIndex + 1} di ${currentQuestions.length}`;
+            scoreCounter.textContent = `Punteggio: ${score}`;
+            const progressPercent = ((currentIndex) / currentQuestions.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            // Set Question Text
+            questionText.textContent = `${currentIndex + 1}. ${currentQ.q}`;
+
+            // Render Options
+            optionsContainer.innerHTML = '';
+            currentQ.options.forEach((option, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all flex items-center justify-between group focus:outline-none shadow-sm`;
+                btn.innerHTML = `
+                    <span class="text-sm md:text-base font-medium text-slate-800 dark:text-slate-200 group-hover:text-royal-gold transition-colors">${option}</span>
+                    <span class="w-6 h-6 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center text-xs font-mono group-hover:border-royal-gold">
+                        ${String.fromCharCode(65 + idx)}
+                    </span>
+                `;
+                btn.addEventListener('click', () => handleAnswer(idx));
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // --- HANDLE ANSWER ---
+        function handleAnswer(selectedIndex) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const currentQ = currentQuestions[currentIndex];
+            const isCorrect = selectedIndex === currentQ.answer;
+
+            if (isCorrect) score++;
+
+            // Save state
+            userAnswers.push({
+                question: currentQ.q,
+                options: currentQ.options,
+                selected: selectedIndex,
+                correct: currentQ.answer,
+                isCorrect: isCorrect,
+                explanation: currentQ.exp
+            });
+
+            // Highlight buttons
+            const optionButtons = optionsContainer.children;
+            for (let i = 0; i < optionButtons.length; i++) {
+                optionButtons[i].disabled = true;
+                if (i === currentQ.answer) {
+                    optionButtons[i].className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 font-semibold flex items-center justify-between shadow-md";
+                } else if (i === selectedIndex && !isCorrect) {
+                    optionButtons[i].className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 font-semibold flex items-center justify-between shadow-md";
+                } else {
+                    optionButtons[i].className = "w-full text-left p-4 rounded-xl border border-slate-200 dark:border-slate-800 opacity-40 bg-white dark:bg-slate-900 flex items-center justify-between";
+                }
+            }
+
+            // Show explanation
+            explanationText.textContent = currentQ.exp;
+            explanationBox.classList.remove('hidden');
+
+            // Toggle controls
+            skipBtn.classList.add('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        // --- SKIP QUESTION ---
+        skipBtn.addEventListener('click', () => {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const currentQ = currentQuestions[currentIndex];
+            userAnswers.push({
+                question: currentQ.q,
+                options: currentQ.options,
+                selected: null, // skipped
+                correct: currentQ.answer,
+                isCorrect: false,
+                explanation: currentQ.exp
+            });
+
+            handleNextQuestion();
+        });
+
+        // --- NEXT BUTTON ---
+        nextBtn.addEventListener('click', () => {
+            handleNextQuestion();
+        });
+
+        function handleNextQuestion() {
+            currentIndex++;
+            if (currentIndex < currentQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // --- SHOW RESULTS ---
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percent = Math.round((score / currentQuestions.length) * 100);
+            finalScorePercent.textContent = `${percent}%`;
+            finalScoreFraction.textContent = `${score} su ${currentQuestions.length} risposte corrette`;
+
+            // Set Rank Badge
+            if (percent >= 90) {
+                rankBadge.textContent = "Storico Reale Suprenno";
+                rankBadge.className = "mt-3 px-4 py-1.5 bg-amber-400 text-slate-950 text-xs font-bold uppercase rounded-full tracking-wider shadow";
+            } else if (percent >= 70) {
+                rankBadge.textContent = "Guardiano del Castello";
+                rankBadge.className = "mt-3 px-4 py-1.5 bg-emerald-500 text-white text-xs font-bold uppercase rounded-full tracking-wider shadow";
+            } else if (percent >= 50) {
+                rankBadge.textContent = "Studioso della Corona";
+                rankBadge.className = "mt-3 px-4 py-1.5 bg-blue-500 text-white text-xs font-bold uppercase rounded-full tracking-wider shadow";
+            } else {
+                rankBadge.textContent = "Apprendista Sassone";
+                rankBadge.className = "mt-3 px-4 py-1.5 bg-slate-500 text-white text-xs font-bold uppercase rounded-full tracking-wider shadow";
+            }
+
+            // Build Review List
+            reviewList.innerHTML = '';
+            userAnswers.forEach((ans, idx) => {
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-xl border ${ans.isCorrect ? 'border-emerald-300 dark:border-emerald-800/60 bg-emerald-50/50 dark:bg-emerald-950/20' : 'border-rose-300 dark:border-rose-800/60 bg-rose-50/50 dark:bg-rose-950/20'} space-y-2`;
+                
+                let selectedText = ans.selected !== null ? ans.options[ans.selected] : '<span class="italic text-slate-400">Domanda Saltata</span>';
+                let correctText = ans.options[ans.correct];
+
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <span class="font-bold text-sm text-slate-900 dark:text-slate-100">${idx + 1}. ${ans.question}</span>
+                        <span class="${ans.isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'} font-bold text-xs uppercase px-2 py-0.5 rounded bg-white/80 dark:bg-slate-900">
+                            ${ans.isCorrect ? 'Corretta' : 'Errata'}
+                        </span>
+                    </div>
+                    <div class="text-xs space-y-1">
+                        <p class="text-slate-600 dark:text-slate-400">Tua risposta: <span class="font-medium ${ans.isCorrect ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300'}">${selectedText}</span></p>
+                        ${!ans.isCorrect ? `<p class="text-slate-600 dark:text-slate-400">Risposta corretta: <span class="font-medium text-emerald-700 dark:text-emerald-300">${correctText}</span></p>` : ''}
+                        <p class="text-slate-500 dark:text-slate-400 italic pt-1 border-t border-slate-200/50 dark:border-slate-800">${ans.explanation}</p>
+                    </div>
+                `;
+                reviewList.appendChild(item);
+            });
+        }
+
+        // --- TOGGLE REVIEW ---
+        toggleReviewBtn.addEventListener('click', () => {
+            reviewContainer.classList.toggle('hidden');
+            if (!reviewContainer.classList.contains('hidden')) {
+                toggleReviewBtn.innerHTML = `<i class="fa-solid fa-eye-slash mr-2"></i> Nascondi Risposte`;
+                reviewContainer.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                toggleReviewBtn.innerHTML = `<i class="fa-solid fa-list-check mr-2"></i> Mostra Tutte le Risposte`;
+            }
+        });
+
+        // --- RESTART QUIZ ---
+        restartBtn.addEventListener('click', () => {
+            resultsScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+            reviewContainer.classList.add('hidden');
+            toggleReviewBtn.innerHTML = `<i class="fa-solid fa-list-check mr-2"></i> Mostra Tutte le Risposte`;
+        });
+    </script>
+</body>
+</html>
